@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Web Client</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .server-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .tool-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            background: white;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+        }
+        .tool-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .tool-name {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .tool-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .tool-args {
+            font-size: 12px;
+            color: #888;
+        }
+        .resource-viewer {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-height: 200px;
+        }
+        button {
+            background-color: #007acc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #005a9f;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        input[type="text"], input[type="file"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 5px;
+            width: 300px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .logs {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔗 MCP Web Client</h1>
+            <p>Connect to MCP servers and interact with tools and resources</p>
+        </div>
+
+        <div class="server-section">
+            <h2>Connect to MCP Server</h2>
+            <input type="text" id="serverPath" placeholder="Path to MCP server script (e.g., ./server.py)" />
+            <button onclick="connectToServer()">Connect</button>
+            <div id="connectionStatus"></div>
+        </div>
+
+        <div class="server-section">
+            <h2>Available Tools</h2>
+            <button onclick="listTools()" id="listToolsBtn" disabled>Refresh Tools</button>
+            <div id="toolsContainer" class="tool-grid"></div>
+        </div>
+
+        <div class="server-section">
+            <h2>Resources</h2>
+            <button onclick="listResources()" id="listResourcesBtn" disabled>List Resources</button>
+            <div id="resourcesContainer"></div>
+            <div id="resourceViewer" class="resource-viewer"></div>
+        </div>
+
+        <div class="server-section">
+            <h2>Activity Logs</h2>
+            <button onclick="clearLogs()">Clear Logs</button>
+            <div id="logs" class="logs"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
